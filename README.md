@@ -1,26 +1,12 @@
-# Solana-Lite
-
-[![Swift](https://github.com/ajamaica/Solana.Swift/actions/workflows/swift.yml/badge.svg?branch=master)](https://github.com/ajamaica/Solana.Swift/actions/workflows/swift.yml)
-[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://opensource.org/licenses/mit-license.php)  
-[![Swift Package Manager compatible](https://img.shields.io/badge/SPM-compatible-brightgreen.svg?style=flat&colorA=28a745&&colorB=4E4E4E)](https://github.com/apple/swift-package-manager)
-
-This is a open source library on pure swift for Solana protocol.
-
-The objective is to create a cross platform, fully functional, highly tested and less depencies as posible. 
-
-Please check my wallet [Summer](https://github.com/ajamaica/Summer).
+# sol-swift
 
 # Features
-- [x] Sign and send transactions.
-- [x] Key pair generation
-- [x] RPC configuration.
-- [x] SPM integration
-- [x] Few libraries requirement (TweetNACL, Starscream, secp256k1).
-- [x] Fully tested (53%)
-- [x] Sockets
-- [ ] Type-safe Transaction templates
-- [ ] Documentation with guides and examples
-- [ ] Program template library for common tasks
+- Sign and send transactions.
+- Key pair generation
+- RPC configuration.
+- SPM integration
+- Few libraries required (TweetNACL, Starscream, secp256k1).
+- Fully tested (53%)
 
 # Usage
 
@@ -30,6 +16,7 @@ Set the NetworkingRouter and setup your enviroment. You can also pass your own *
 let network = NetworkingRouter(endpoint: .devnetSolana)
 let solana = Solana(router: network, accountStorage: self.accountStorage)
 ```
+
 ### Keypair generation
 
 SolanaAccountStorage interface is used to return the generated accounts. The actual storage of the accout is handled by the client. Please make sure this account is stored correctly (you can encrypt it on the keychain). The retrived accout is Serializable. Inside Account you will fine the phrase, publicKey and secretKey.
