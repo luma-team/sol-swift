@@ -8,10 +8,10 @@ Pod::Spec.new do |s|
  This is a open source library on pure swift for Solana protocol. 
                        DESC
 
-  s.homepage         = 'https://github.com/luma-team/Solana-Lite'
+  s.homepage         = 'https://github.com/luma-team/sol-swift'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Luma' => 'support@lu.ma' }
-  s.source           = { :git => 'https://github.com/luma-team/Solana.Swift.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/luma-team/sol-swift.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '11.0'
   s.osx.deployment_target = "10.12"
