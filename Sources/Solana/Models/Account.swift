@@ -6,7 +6,7 @@ public struct Account: Codable, Hashable {
     public let publicKey: PublicKey
     public let secretKey: Data
 
-    public init?(phrase: [String] = [], network: Network, derivablePath: DerivablePath? = nil) {
+    public init?(phrase: [String] = [], derivablePath: DerivablePath? = nil) {
         let mnemonic: Mnemonic
         var phrase = phrase.filter {!$0.isEmpty}
         if !phrase.isEmpty,
@@ -20,36 +20,18 @@ public struct Account: Codable, Hashable {
 
         let derivablePath = derivablePath ?? .default
 
-        switch derivablePath.type {
-        case .bip32Deprecated:
-            guard let keychain = try? Keychain(seedString: phrase.joined(separator: " "), network: network.cluster)  else {
-                return nil
-            }
-            guard let seed = try? keychain.derivedKeychain(at: derivablePath.rawValue).privateKey else {
-                return nil
-            }
-            guard let keyPair = try? NaclSign.KeyPair.keyPair(fromSeed: seed) else {
-                return nil
-            }
-            guard let newKey = PublicKey(data: keyPair.publicKey) else {
-                return nil
-            }
-            self.publicKey = newKey
-            self.secretKey = keyPair.secretKey
-        default:
-            guard let keys = try? Ed25519HDKey.derivePath(derivablePath.rawValue, seed: mnemonic.seed.toHexString()).get() else {
-                return nil
-            }
-
-            guard let keyPair = try? NaclSign.KeyPair.keyPair(fromSeed: keys.key) else {
-                return nil
-            }
-            guard let newKey = PublicKey(data: keyPair.publicKey) else {
-                return nil
-            }
-            self.publicKey = newKey
-            self.secretKey = keyPair.secretKey
+        guard let keys = try? Ed25519HDKey.derivePath(derivablePath.rawValue, seed: mnemonic.seed.toHexString()).get() else {
+            return nil
         }
+
+        guard let keyPair = try? NaclSign.KeyPair.keyPair(fromSeed: keys.key) else {
+            return nil
+        }
+        guard let newKey = PublicKey(data: keyPair.publicKey) else {
+            return nil
+        }
+        self.publicKey = newKey
+        self.secretKey = keyPair.secretKey
     }
 
     public init?(secretKey: Data) {
