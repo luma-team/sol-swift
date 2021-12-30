@@ -76,62 +76,6 @@ struct KeychainAccountStorageModule: SolanaAccountStorage {
     }
 }
 ```
-### RPC api calls
-
-We support [45](https://github.com/ajamaica/Solana.Swift/tree/master/Sources/Solana/Api "Check the Api folder") rpc api calls. If a call requires address in base58 format and it is null it will default to the one returned by SolanaAccountStorage.
-
-Example using callback
-
-Gets Accounts info.
-```swift
-solana.api.getAccountInfo(account: account.publicKey.base58EncodedString, decodedTo: AccountInfo.self) { result in
-// process result
-}
-```
-Gets Balance
-```swift
- solana.api.getBalance(account: account.publicKey.base58EncodedString){ result in
- // process result
- }
-```
-
-### Actions
-
-Actions are predifined program interfaces that construct the required inputs for the most common tasks in Solana ecosystems. You can see them as bunch of code that implements solana task using rpc calls.
-
-We support 12.
-- closeTokenAccount: Closes token account
-- getTokenWallets: get token accounts
-- createAssociatedTokenAccount: Opens associated token account
-- sendSOL : Sends SOL native token
-- createTokenAccount: Opens token account
-- sendSPLTokens: Sends tokens
-- findSPLTokenDestinationAddress : Finds address of a token of a address
-- **serializeAndSendWithFee**: Serializes and signs the transaction. Then it it send to the blockchain.
-- getMintData: Get mint data for token
-- serializeTransaction: Serializes transaction
-- getPools: Get all available pools. Very intensive
-- swap: Swaps 2 tokens from pool.
-
-#### Example
-
-Create an account token
-
-```swift
-solana.action.createTokenAccount( mintAddress: mintAddress) { result in
-// process
-}
-```
-Sending sol
-```swift
-let toPublicKey = "3h1zGmCwsRJnVk5BuRNMLsPaQu1y2aqXqXDWYCgrp5UG"
-let transactionId = try! solana.action.sendSOL(
-            to: toPublicKey,
-            amount: 10
-){ result in
- // process
-}
-```
 
 ## Requirements
 
@@ -140,15 +84,9 @@ let transactionId = try! solana.action.sendSOL(
 
 ## Installation
 
-From Xcode 11, you can use [Swift Package Manager](https://swift.org/package-manager/) to add Solana.swift to your project.
+From Xcode 11, you can use [Swift Package Manager](https://swift.org/package-manager/) to add sol-swift to your project.
 
 - File > Swift Packages > Add Package Dependency
-- Add `https://github.com/ajamaica/Solana.Swift`
+- Add `https://github.com/luma-team/sol-swift`
 - Select "brach" with "master"
 - Select Solana
-
-If you encounter any problem or have a question on adding the package to an Xcode project, I suggest reading the [Adding Package Dependencies to Your App](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app)  guide article from Apple.
-
-### Acknowledgment
-
-This was originally based on [P2P-ORG](https://github.com/p2p-org/solana-swift), currently is not longer compatible.
