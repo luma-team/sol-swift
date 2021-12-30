@@ -17,9 +17,6 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = "10.12"
   s.source_files = 'Sources/Solana/**/*'
   s.swift_versions   = ["5.3"]
-  s.resource_bundles = {
-    'Solana.Swift' => ['Sources/Solana/Resources/*.json']
-  }
   s.dependency 'TweetNacl', '~> 1.0.2'
   s.dependency 'CryptoSwift', '~> 1.4.0'
 end

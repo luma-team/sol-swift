@@ -11,6 +11,7 @@ extension Action {
         guard let account = try? self.auth.account.get() else {
             return onComplete(.failure(SolanaError.unauthorized))
         }
+        print("WE HERE")
 
         ContResult.init { cb in
             self.findSPLTokenDestinationAddress(
@@ -18,6 +19,7 @@ extension Action {
                 destinationAddress: destinationAddress
             ) { cb($0) }
         }.flatMap { (destination, isUnregisteredAsocciatedToken) in
+            print("OK", destination, isUnregisteredAsocciatedToken)
 
             let toPublicKey = destination
 

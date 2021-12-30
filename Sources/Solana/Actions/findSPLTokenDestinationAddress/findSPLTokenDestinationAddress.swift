@@ -7,6 +7,7 @@ extension Action {
         destinationAddress: String,
         onComplete: @escaping (Result<SPLTokenDestinationAddress, Error>) -> Void
     ) {
+        print("FINDING THE DEST")
 
         ContResult<BufferInfo<AccountInfo>, Error>.init { cb in
             self.api.getAccountInfo(
@@ -14,12 +15,14 @@ extension Action {
                 decodedTo: AccountInfo.self
             ) { cb($0) }
         }.flatMap { info in
+            print("GOT SOME INFO HEHEHE", info)
             let toTokenMint = info.data.value?.mint.base58EncodedString
             var toPublicKeyString: String = ""
             if mintAddress == toTokenMint {
                 // detect if destination address is already a SPLToken address
                 toPublicKeyString = destinationAddress
             } else if info.owner == PublicKey.programId.base58EncodedString {
+                print("ITS AN OWNER")
                 // detect if destination address is a SOL address
                 guard let owner = PublicKey(string: destinationAddress) else {
                     return .failure(SolanaError.invalidPublicKey)
@@ -37,20 +40,25 @@ extension Action {
                 }
 
                 toPublicKeyString = address.base58EncodedString
+                print("this is the new addy", toPublicKeyString)
             }
 
             guard let toPublicKey = PublicKey(string: toPublicKeyString) else {
                 return .failure(SolanaError.invalidPublicKey)
             }
 
+            print("we converted it to a key", toPublicKey)
+
             if destinationAddress != toPublicKey.base58EncodedString {
                 // check if associated address is already registered
+                print("but is it registered?")
                 return ContResult.init { cb in
                     self.api.getAccountInfo(
                         account: toPublicKey.base58EncodedString,
                         decodedTo: AccountInfo.self
                     ) { cb($0)}
                 }.flatMap { info1 in
+                    print("got info on registration")
                     var isUnregisteredAsocciatedToken = true
                     // if associated token account has been registered
                     if info1.owner == PublicKey.tokenProgramId.base58EncodedString &&

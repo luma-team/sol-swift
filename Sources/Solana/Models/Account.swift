@@ -26,7 +26,7 @@ public struct Account: Codable, Hashable {
                 return nil
             }
             guard let seed = try? keychain.derivedKeychain(at: derivablePath.rawValue).privateKey else {
-                            return nil
+                return nil
             }
             guard let keyPair = try? NaclSign.KeyPair.keyPair(fromSeed: seed) else {
                 return nil

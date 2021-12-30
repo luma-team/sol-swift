@@ -7,6 +7,7 @@ public extension Api {
             switch result {
             case .success(let rpc):
                 guard let value = rpc.value else {
+                    print("FUCK", rpc)
                     onComplete(.failure(SolanaError.nullValue))
                     return
                 }
