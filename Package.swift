@@ -15,8 +15,8 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(name: "TweetNacl", url: "https://github.com/bitmark-inc/tweetnacl-swiftwrap.git", from: "1.0.2"),
-        .package(url: "https://github.com/daltoniam/Starscream.git", from: "4.0.0"),
+        .package(name: "TweetNacl", url: "https://github.com/bitmark-inc/tweetnacl-swiftwrap.git", .exact("1.1.0")),
+        .package(url: "https://github.com/daltoniam/Starscream.git", .exact("4.0.4")),
         .package(name: "secp256k1", url: "https://github.com/Boilertalk/secp256k1.swift.git", .exact("0.1.4")),
     ],
     targets: [
