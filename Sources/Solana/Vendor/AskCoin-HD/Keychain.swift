@@ -43,9 +43,7 @@ public class Keychain: NSObject {
 	}
 
     public convenience init?(seedString: String, network: String) throws {
-        guard let seedData = Mnemonic(phrase: seedString.components(separatedBy: " ")) else {
-            return nil
-        }
+        let seedData = Mnemonic(phrase: seedString.components(separatedBy: " "))
         guard let keyData = "Bitcoin seed".data(using: .utf8) else {
             return nil
         }

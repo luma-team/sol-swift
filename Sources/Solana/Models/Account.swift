@@ -7,16 +7,9 @@ public struct Account: Codable, Hashable {
     public let secretKey: Data
 
     public init?(phrase: [String] = [], derivablePath: DerivablePath? = nil) {
-        let mnemonic: Mnemonic
-        var phrase = phrase.filter {!$0.isEmpty}
-        if !phrase.isEmpty,
-           let newMnemonic = Mnemonic(phrase: phrase) {
-            mnemonic = newMnemonic
-        } else {
-            mnemonic = Mnemonic()
-            phrase = mnemonic.phrase
-        }
-        self.phrase = phrase
+        let phrase = phrase.filter {!$0.isEmpty}
+        let mnemonic = Mnemonic(phrase: phrase)
+        self.phrase = mnemonic.phrase
 
         let derivablePath = derivablePath ?? .default
 
