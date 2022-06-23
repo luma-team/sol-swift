@@ -43,7 +43,7 @@ public class Mnemonic {
         self.passphrase = ""
     }
 
-    public init?(phrase: [String], passphrase: String = "") {
+    public init(phrase: [String], passphrase: String = "") {
         self.phrase = phrase
         self.passphrase = passphrase
     }
